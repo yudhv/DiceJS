@@ -10,30 +10,25 @@ GAME RULES:
 */
 
 
-let activePlayer, roundScores, currentScores, dice;
+let activePlayer, roundScores, totalScores, dice;
 
-roundScores = [];
-activePlayer = 0;
-currentScores = [0,0];
-
-// Put all values to zero on the DOM
-document.querySelectorAll('.player-score').forEach(el => el.textContent = 0);
-document.querySelectorAll('.player-current-score').forEach(el => el.textContent = 0);
+init();
 
 // Add Event Listeners
-document.querySelector('.btn-hold').addEventListener('click',playerChanger);
+document.querySelector('.btn-hold').addEventListener('click',changePlayer);
 document.querySelector('.btn-roll').addEventListener('click',rollDice);
+document.querySelector('.btn-new').addEventListener('click',init);
 
 // Event Listener methods
-function playerChanger() {
+function changePlayer() {
     firstPlayerElement = document.querySelector('.player-0-panel');
     secondPlayerElement = document.querySelector('.player-1-panel')
-
     scoreInFocus = document.querySelector('#score-'+activePlayer);
     currentScoreInFocus = document.querySelector('#current-'+activePlayer);
-    scoreInFocus.textContent = parseInt(scoreInFocus.textContent) + parseInt(currentScoreInFocus.textContent);
+    
+    scoreInFocus.textContent = parseInt(scoreInFocus.textContent) + totalScores[activePlayer];
     currentScoreInFocus.textContent = 0;
-    currentScores[activePlayer] = 0;
+    totalScores[activePlayer] = 0;
     
     if(activePlayer === 1) {
         activePlayer=0;
@@ -52,20 +47,35 @@ function rollDice(){
     dice = Math.floor(Math.random()*6) + 1;
 
     if(dice === 1){
+        totalScores[activePlayer] = 0;
+
         // Turn players if dice turns to 1
-        playerChanger();
+        changePlayer();
     }
     else{
         // Add to previous dice scores 
-        currentScores[activePlayer] += dice;
-            
-        // Display result 
-        document.querySelector('#current-'+activePlayer).textContent = currentScores[activePlayer];
+        totalScores[activePlayer] += dice;
     }
+
+    // Display result 
+    document.querySelector('#current-'+activePlayer).textContent = totalScores[activePlayer];
 
     // Change dice image
     document.querySelector('.dice').src = 'images/dice-'+dice+'.png';
 }
 
-
+function init(){
+    roundScore = 0;
+    activePlayer = 0;
+    totalScores = [0,0];
+    document.querySelectorAll('.player-score').forEach(el => el.textContent = 0);
+    document.querySelectorAll('.player-current-score').forEach(el => el.textContent = 0);
+    document.getElementById('name-0').textContent = 'Player 1';
+    document.getElementById('name-1').textContent = 'Player 2';
+    document.querySelector('.player-0-panel').classList.remove('winner');
+    document.querySelector('.player-1-panel').classList.remove('winner');
+    document.querySelector('.player-0-panel').classList.remove('active');
+    document.querySelector('.player-1-panel').classList.remove('active');
+    document.querySelector('.player-0-panel').classList.add('active');
+}
 
