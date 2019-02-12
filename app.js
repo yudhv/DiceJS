@@ -16,16 +16,18 @@ roundScores = [];
 activePlayer = 0;
 currentScores = [0,0];
 
+// Put all values to zero on the DOM
+document.querySelectorAll('.player-score').forEach(el => el.textContent = 0);
+document.querySelectorAll('.player-current-score').forEach(el => el.textContent = 0);
 
-
+// Add Event Listeners
 document.querySelector('.btn-hold').addEventListener('click',playerChanger);
 document.querySelector('.btn-roll').addEventListener('click',rollDice);
 
-
-
+// Event Listener methods
 function playerChanger() {
-    activePlayer==1 ? activePlayer=0 : activePlayer=1;
-    
+    activePlayer === 1 ? activePlayer=0 : activePlayer=1;
+    document.querySelector()
 }
 
 function rollDice(){
@@ -36,7 +38,7 @@ function rollDice(){
     document.querySelector('#current-'+activePlayer).textContent = dice;
 
     // Change dice image
-    document.querySelector('.dice').src = 'dice-'+dice+'.png';
+    document.querySelector('.dice').src = 'images/dice-'+dice+'.png';
 }
 
 
