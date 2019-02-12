@@ -36,8 +36,10 @@ function changePlayer() {
 
     if(totalScores[activePlayer] >= 30){
         document.querySelector('#name-'+activePlayer).textContent = 'WINNER!!';
-        firstPlayerElement.classList.add('winner');
-        setInterval(init,5000);
+        document.querySelector('.player-'+activePlayer+'-panel').classList.add('winner');
+        document.querySelector('.btn-roll').style.display = 'none';
+        document.querySelector('.btn-hold').style.display = 'none';
+        setTimeout(init,5000);
         return;
     }
     
@@ -84,6 +86,8 @@ function init(){
     activePlayer = 0;
     totalScores = [0,0];
     document.querySelector('.dice').src = 'images/dice-1.png';
+    document.querySelector('.btn-roll').style.display = 'block';
+    document.querySelector('.btn-hold').style.display = 'block';
     document.querySelectorAll('.player-score').forEach(el => el.textContent = 0);
     document.querySelectorAll('.player-current-score').forEach(el => el.textContent = 0);
     document.getElementById('name-0').textContent = 'Player 1';
