@@ -26,16 +26,42 @@ document.querySelector('.btn-roll').addEventListener('click',rollDice);
 
 // Event Listener methods
 function playerChanger() {
-    activePlayer === 1 ? activePlayer=0 : activePlayer=1;
-    document.querySelector()
+    firstPlayerElement = document.querySelector('.player-0-panel');
+    secondPlayerElement = document.querySelector('.player-1-panel')
+
+    scoreInFocus = document.querySelector('#score-'+activePlayer);
+    currentScoreInFocus = document.querySelector('#current-'+activePlayer);
+    scoreInFocus.textContent = parseInt(scoreInFocus.textContent) + parseInt(currentScoreInFocus.textContent);
+    currentScoreInFocus.textContent = 0;
+    currentScores[activePlayer] = 0;
+    
+    if(activePlayer === 1) {
+        activePlayer=0;
+        firstPlayerElement.className += ' active';
+        secondPlayerElement.className = 'player-1-panel';
+    }
+    else{
+        activePlayer=1;
+        firstPlayerElement.className = 'player-0-panel';
+        secondPlayerElement.className += ' active';
+    }
 }
 
 function rollDice(){
     // Get random dice number 
     dice = Math.floor(Math.random()*6) + 1;
 
-    // Display result 
-    document.querySelector('#current-'+activePlayer).textContent = dice;
+    if(dice === 1){
+        // Turn players if dice turns to 1
+        playerChanger();
+    }
+    else{
+        // Add to previous dice scores 
+        currentScores[activePlayer] += dice;
+            
+        // Display result 
+        document.querySelector('#current-'+activePlayer).textContent = currentScores[activePlayer];
+    }
 
     // Change dice image
     document.querySelector('.dice').src = 'images/dice-'+dice+'.png';
